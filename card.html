@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highbank - Pedir Cartão</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Highbank</h1>
+        <h2>Pedir Cartão</h2>
+    </header>
+    <main>
+        <form id="card-form">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" required>
+
+            <button type="submit">Pedir Cartão</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('card-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Aqui você deve adicionar o código para processar o pedido de cartão
+
+            alert('Pedido de cartão realizado com sucesso!');
+        });
+    </script>
+</body>
+</html>

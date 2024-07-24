@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highbank - Recarregar Celular</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Highbank</h1>
+        <h2>Recarregar Celular</h2>
+    </header>
+    <main>
+        <form id="recharge-form">
+            <label for="numero">Número do Celular:</label>
+            <input type="text" id="numero" name="numero" required>
+
+            <label for="valor">Valor:</label>
+            <input type="number" id="valor" name="valor" required>
+
+            <button type="submit">Recarregar</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('recharge-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Aqui você deve adicionar o código para processar a recarga
+
+            alert('Recarga realizada com sucesso!');
+        });
+    </script>
+</body>
+</html>

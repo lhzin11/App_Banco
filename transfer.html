@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highbank - Transferir Dinheiro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Fundo preto forte */
+            color: #FFA500; /* Texto laranja neon */
+        }
+
+        header {
+            background-color: #000000; /* Fundo preto forte */
+            color: #FFA500; /* Texto laranja neon */
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #FFA500; /* Bordas laranja neon */
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #1c1c1c; /* Fundo preto forte */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.5); /* Sombra laranja neon */
+            border: 2px solid #FFA500; /* Bordas laranja neon */
+        }
+
+        h1, h2 {
+            color: #FFA500; /* Laranja neon */
+            animation: fadeInDown 1s ease-out; /* Animação de fade in */
+        }
+
+        form {
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out; /* Animação de fade in */
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #FFA500; /* Texto laranja neon */
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FFA500; /* Bordas laranja neon */
+            border-radius: 4px;
+            background-color: #333; /* Fundo preto forte */
+            color: #fff; /* Texto branco */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
+        }
+
+        input:focus {
+            background-color: #444; /* Fundo cinza escuro */
+            transform: scale(1.05); /* Aumenta ligeiramente o input */
+        }
+
+        button {
+            width: 100%;
+            background-color: #FFA500; /* Laranja neon */
+            color: #fff; /* Texto branco */
+            border: none;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
+            animation: fadeInUp 1s ease-out; /* Animação de fade in */
+        }
+
+        button:hover {
+            background-color: #FF8C00; /* Laranja escuro neon */
+            transform: scale(1.1); /* Aumenta o botão */
+            animation: pulse 1s infinite; /* Animação de pulse */
+        }
+
+        /* Animações */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Fica sobre a tela */
+            z-index: 1; /* Fica acima de tudo */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Permite rolar se necessário */
+            background-color: rgb(0,0,0); /* Fundo preto */
+            background-color: rgba(0,0,0,0.4); /* Fundo preto com opacidade */
+            animation: fadeIn 0.5s; /* Animação de fade in */
+        }
+
+        .modal-content {
+            background-color: #1c1c1c; /* Fundo preto forte */
+            margin: 15% auto; /* 15% do topo e centro */
+            padding: 20px;
+            border: 1px solid #FFA500; /* Bordas laranja neon */
+            width: 80%; /* Largura do modal */
+            color: #fff; /* Texto branco */
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close {
+            color: #FFA500; /* Laranja neon */
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff; /* Texto branco */
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Highbank</h1>
+        <h2>Transferir Dinheiro</h2>
+    </header>
+    <main>
+        <form id="transfer-form" action="/transfer" method="post">
+            <label for="account-destino">Conta Destino:</label>
+            <input type="text" id="account-destino" name="account-destino" required>
+
+            <label for="valor">Valor:</label>
+            <input type="number" id="valor" name="valor" required>
+
+            <button type="submit">Transferir</button>
+        </form>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Transferência realizada com sucesso!</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+
+        document.getElementById('transfer-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Aqui você deve adicionar o código para processar a transferência
+            // Exibir modal
+            var modal = document.getElementById('modal');
+            modal.style.display = 'block';
+
+            var span = document.getElementsByClassName('close')[0];
+            span.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
